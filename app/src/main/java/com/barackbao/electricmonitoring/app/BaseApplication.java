@@ -1,5 +1,7 @@
 package com.barackbao.electricmonitoring.app;
 
+
+
 import android.app.Application;
 
 import com.fengmap.android.FMMapSDK;
@@ -15,7 +17,7 @@ public class BaseApplication extends Application {
 
     @Override
     public void onCreate() {
-        super.onCreate();
         FMMapSDK.init(this);
+        super.onCreate();
     }
 }

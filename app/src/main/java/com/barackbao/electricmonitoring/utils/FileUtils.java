@@ -19,6 +19,7 @@ import java.io.OutputStream;
  */
 public class FileUtils {
 
+
     /**
      * 主题文件类型
      */
@@ -32,12 +33,12 @@ public class FileUtils {
     /**
      * 默认地图
      */
-    public static final String DEFAULT_MAP_ID = "10347";
+    public static final String DEFAULT_MAP_ID = "nucmain";
 
     /**
      * 默认主题
      */
-    public static final String DEFAULT_THEME_ID = "3007";
+    public static final String DEFAULT_THEME_ID = "/";
 
     /**
      * 通过主题id获取主题路径
@@ -110,7 +111,7 @@ public class FileUtils {
      * @param context 上下文
      */
     public static void copyAssetsThemeToSdcard(Context context) {
-        String srcFileName = "theme.zip";
+        String srcFileName = "nucmain.zip";
         String themeDir = FMDataManager.getFMThemeResourceDirectory();
         String destFileName = themeDir + srcFileName;
         try {
@@ -215,5 +216,4 @@ public class FileUtils {
             closeable.close();
         }
     }
-
 }
