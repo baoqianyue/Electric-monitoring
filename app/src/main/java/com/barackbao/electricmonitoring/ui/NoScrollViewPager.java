@@ -1,4 +1,4 @@
-package wuxiang.miku.scorpio.paperactivate.widget;
+package com.barackbao.electricmonitoring.ui;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

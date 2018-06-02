@@ -24,9 +24,16 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:26.1.0'
     //butterknife
     implementation 'com.jakewharton:butterknife:8.8.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'com.android.support:design:26.1.0'
     compile 'com.android.support:cardview-v7:26.1.0'
     testImplementation 'junit:junit:4.12'
     implementation files('libs/fengmap-2.1.3.jar')
+    //chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    //tablayout
+    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.0@aar'
+    implementation 'com.android.support:recyclerview-v7:26.1.0-alpha1'
+    implementation 'com.android.support:cardview-v7:26.1.0-alpha1'
 }

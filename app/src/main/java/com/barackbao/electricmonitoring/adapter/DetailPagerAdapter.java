@@ -1,27 +1,26 @@
-package wuxiang.miku.scorpio.paperactivate.adapter;
+package com.barackbao.electricmonitoring.adapter;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import wuxiang.miku.scorpio.paperactivate.R;
-import wuxiang.miku.scorpio.paperactivate.modules.home.childpagers.center.CenterFragment;
-import wuxiang.miku.scorpio.paperactivate.modules.home.childpagers.left_ar.BARFragment;
-import wuxiang.miku.scorpio.paperactivate.modules.home.childpagers.right_ocr.OcrFragment;
+import com.barackbao.electricmonitoring.R;
+import com.barackbao.electricmonitoring.fragment.DetailFragment;
+
 
 /**
  * Created by Wangtianrui on 2018/5/1.
  */
 
-public class HomePagerAdapter extends FragmentPagerAdapter {
+public class DetailPagerAdapter extends FragmentPagerAdapter {
     private final String[] TITLES;
-    private Fragment[] fragments;
+    private DetailFragment[] fragments;
 
-    public HomePagerAdapter(FragmentManager fm, Context context) {
+    public DetailPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         TITLES = context.getResources().getStringArray(R.array.sections);
-        fragments = new Fragment[TITLES.length];
+        fragments = new DetailFragment[TITLES.length];
     }
 
     @Override
@@ -29,13 +28,16 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
         if (fragments[position] == null) {
             switch (position) {
                 case 0:
-                    fragments[position] = BARFragment.newInstance();
+                    fragments[position] = DetailFragment.newInstance();
                     break;
                 case 1:
-                    fragments[position] = CenterFragment.newInstance();
+                    fragments[position] = DetailFragment.newInstance();
                     break;
                 case 2:
-                    fragments[position] = OcrFragment.newInstance();
+                    fragments[position] = DetailFragment.newInstance();
+                    break;
+                case 3:
+                    fragments[position] = DetailFragment.newInstance();
                     break;
                 default:
                     break;
@@ -52,5 +54,9 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return TITLES[position];
+    }
+
+    public void changePage(int position){
+        fragments[position].changePage();
     }
 }
