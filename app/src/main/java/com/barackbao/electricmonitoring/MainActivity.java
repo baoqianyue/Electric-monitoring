@@ -62,9 +62,9 @@ public class MainActivity extends AppCompatActivity implements OnFMMapInitListen
             //房间名
             String roomName = model.getName();
             //界面跳转,自己补全
-//            Intent intent = new Intent(this, this);
-//            intent.putExtra("roomName", roomName);
-
+            Intent intent = new Intent(MainActivity.this, DetailInformationActivity.class);
+            intent.putExtra("roomName", roomName);
+            startActivity(intent);
 
             FMMapCoord centerMapCoord = model.getCenterMapCoord();
             return true;

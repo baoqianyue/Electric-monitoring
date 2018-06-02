@@ -2,14 +2,13 @@ package com.barackbao.electricmonitoring;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.barackbao.electricmonitoring.adapter.DetailPagerAdapter;
-import com.barackbao.electricmonitoring.fragment.DetailFragment;
 import com.barackbao.electricmonitoring.ui.NoScrollViewPager;
 import com.flyco.tablayout.SlidingTabLayout;
 
@@ -26,6 +25,8 @@ public class DetailInformationActivity extends AppCompatActivity {
     SlidingTabLayout slidingTabs;
     @BindView(R.id.view_pager)
     NoScrollViewPager viewPager;
+    @BindView(R.id.title)
+    TextView toolbarTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,10 @@ public class DetailInformationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_information);
         ButterKnife.bind(this);
         initViewPager();
+        Intent intent = getIntent();
+        String title = intent.getStringExtra("roomName");
+        toolbarTitle.setText(title);
+
     }
 
     /**
