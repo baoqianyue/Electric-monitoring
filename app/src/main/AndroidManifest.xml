@@ -22,7 +22,7 @@
 
         <meta-data
             android:name="com.fengmap.mapapi.appkey"
-            android:value="cce75fbe93a56251e27f0369000a813b" />
+            android:value="a79d805f84bdfa27c83f25d4ba01b73f" />
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden"
