@@ -1,46 +1,123 @@
 package com.barackbao.electricmonitoring;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.barackbao.electricmonitoring.utils.FileUtils;
+import com.barackbao.electricmonitoring.utils.RequestPermission;
+import com.barackbao.electricmonitoring.utils.ViewHelper;
+import com.barackbao.electricmonitoring.widget.FabTagLayout;
+import com.barackbao.electricmonitoring.widget.FloatingActionButtonPlus;
 import com.fengmap.android.FMDevice;
 import com.fengmap.android.map.FMMap;
 import com.fengmap.android.map.FMMapUpgradeInfo;
 import com.fengmap.android.map.FMMapView;
+import com.fengmap.android.map.FMPickMapCoordResult;
 import com.fengmap.android.map.FMViewMode;
+import com.fengmap.android.map.event.OnFMMapClickListener;
 import com.fengmap.android.map.event.OnFMMapInitListener;
+import com.fengmap.android.map.event.OnFMNodeListener;
+import com.fengmap.android.map.geometry.FMMapCoord;
+import com.fengmap.android.map.layer.FMModelLayer;
+import com.fengmap.android.map.marker.FMModel;
+import com.fengmap.android.map.marker.FMNode;
 import com.fengmap.android.widget.FM3DControllerButton;
 import com.fengmap.android.widget.FMZoomComponent;
 
-public class MainActivity extends Activity implements OnFMMapInitListener {
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements OnFMMapInitListener {
 
     private static final String TAG = "MainActivity";
 
+    private FMModelLayer mModelLayer;
+    private FMModel mClickModel;
     private FMMapView mMapView;
     private FMMap mMap;
     private FMZoomComponent mZoomComponent;
+    private FloatingActionButtonPlus mFabGroup;
     FM3DControllerButton mTextBtn;
+
+    private OnFMNodeListener mOnModelClickListener = new OnFMNodeListener() {
+        @Override
+        public boolean onClick(FMNode fmNode) {
+            if (mClickModel != null) {
+                mClickModel.setSelected(false);
+            }
+            FMModel model = (FMModel) fmNode;
+            mClickModel = model;
+            model.setSelected(true);
+            mMap.updateMap();
+            Log.i(TAG, "model name is " + model.getName());
+            //房间名
+            String roomName = model.getName();
+            //界面跳转,自己补全
+            Intent intent = new Intent(MainActivity.this, DetailInformationActivity.class);
+            intent.putExtra("roomName", roomName);
+            startActivity(intent);
+
+            FMMapCoord centerMapCoord = model.getCenterMapCoord();
+            return true;
+        }
+
+        @Override
+        public boolean onLongPress(FMNode fmNode) {
+            return false;
+        }
+    };
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
+        //申请权限
+        requestPermiss();
         openMapByPath();
+        fabGroupEvents();
     }
+
+    private void fabGroupEvents() {
+        mFabGroup.setOnItemClickListener(new FloatingActionButtonPlus.OnItemClickListener() {
+            @Override
+            public void onItemClick(FabTagLayout tagView, int position) {
+                Toast.makeText(MainActivity.this, tagView.getTag() + "未实现", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void requestPermiss() {
+        RequestPermission.requestPermissions(this,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                new RequestPermission.OnPermissionsRequestListener() {
+                    @Override
+                    public void onGranted() {
+
+                    }
+
+                    @Override
+                    public void onDenied(List<String> deniedList) {
+                        Toast.makeText(MainActivity.this, "拒绝将无法使用本应用", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
 
     private void openMapByPath() {
 
         mMapView = findViewById(R.id.map_view);
+        mFabGroup = findViewById(R.id.FabPlus);
         mMap = mMapView.getFMMap();
 
         mMap.setOnFMMapInitListener(this);
@@ -59,6 +136,12 @@ public class MainActivity extends Activity implements OnFMMapInitListener {
             initZoomComponent();
         }
         init3DControllerComponent();
+        int groupId = mMap.getFocusGroupId();
+
+        //模型图层
+        mModelLayer = mMap.getFMLayerProxy().getFMModelLayer(groupId);
+        mModelLayer.setOnFMNodeListener(mOnModelClickListener);
+        mMap.addLayer(mModelLayer);
 
     }
 
@@ -131,4 +214,5 @@ public class MainActivity extends Activity implements OnFMMapInitListener {
         }
         super.onBackPressed();
     }
+
 }
