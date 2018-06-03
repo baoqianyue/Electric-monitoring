@@ -29,15 +29,19 @@ public class DetailPagerAdapter extends FragmentPagerAdapter {
             switch (position) {
                 case 0:
                     fragments[position] = DetailFragment.newInstance();
+
                     break;
                 case 1:
                     fragments[position] = DetailFragment.newInstance();
+                    fragments[position].setLoad(true);
                     break;
                 case 2:
                     fragments[position] = DetailFragment.newInstance();
+                    fragments[position].setLoad(true);
                     break;
                 case 3:
                     fragments[position] = DetailFragment.newInstance();
+                    fragments[position].setLoad(true);
                     break;
                 default:
                     break;
@@ -56,7 +60,11 @@ public class DetailPagerAdapter extends FragmentPagerAdapter {
         return TITLES[position];
     }
 
-    public void changePage(int position){
-        fragments[position].changePage();
+    public void changePage(int position) {
+
+        if (position != 0) {
+            fragments[position].changePage();
+//            fragments[1].setLoad(false);
+        }
     }
 }
