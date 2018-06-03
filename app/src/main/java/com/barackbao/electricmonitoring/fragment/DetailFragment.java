@@ -1,5 +1,8 @@
 package com.barackbao.electricmonitoring.fragment;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,6 +45,7 @@ public class DetailFragment extends Fragment {
     Unbinder unbinder;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
+    private boolean isLoad = false;
 
     private DetailRecyclerAdapter detailRecyclerAdapter;
     private ArrayList<DetailItem> datas = new ArrayList<>();
@@ -56,7 +60,20 @@ public class DetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.detial_information_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
-        loadData();
+        if (isLoad) {
+            loadData();
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("设备未连接")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    })
+                    .setCancelable(true)
+                    .show();
+        }
         initView();
         return view;
     }
@@ -117,11 +134,15 @@ public class DetailFragment extends Fragment {
         return test;
     }
 
-    public void changePage(){
+    public void changePage() {
         datas.clear();
         detailRecyclerAdapter.notifyDataSetChanged();
         loadData();
         detailRecyclerAdapter.notifyDataSetChanged();
+    }
+
+    public void setLoad(boolean b) {
+        isLoad = b;
     }
 
 }
