@@ -62,7 +62,7 @@ public class DetailPagerAdapter extends FragmentPagerAdapter {
 
     public void changePage(int position) {
 
-        if (position != 1) {
+        if (position != 0) {
             fragments[position].changePage();
 //            fragments[1].setLoad(false);
         }
