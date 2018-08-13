@@ -12,22 +12,24 @@
         android:targetSdkVersion="22" />
 
     <application
+
         android:name=".app.BaseApplication"
         android:allowBackup="true"
         android:icon="@drawable/image"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+
         android:theme="@style/AppTheme">
 
         <meta-data
             android:name="com.fengmap.mapapi.appkey"
-            android:value="a79d805f84bdfa27c83f25d4ba01b73f" />
+            android:value="e1db95194d2913f22e011a2304886a5f" />
 
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait">
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,7 +37,9 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".DetailInformationActivity"></activity>
+        <activity
+            android:name=".DetailInformationActivity"
+            android:screenOrientation="landscape"></activity>
 
     </application>
 
